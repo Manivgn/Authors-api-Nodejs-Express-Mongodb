@@ -1,10 +1,8 @@
 const asyncHandler = require('express-async-handler')
-
 const Author = require('../models/authorModel')
 
 //@desc Get authors
 // @route GET /api/authors
-//@ access private
 const getAuthors = asyncHandler(async (req, res) => {
     const authors  = await Author.find().sort({fullName :1})
     res.json(authors)
@@ -12,14 +10,13 @@ const getAuthors = asyncHandler(async (req, res) => {
 
 //@desc Set Author
 // @route POST /api/authors
-//@ access private
 const SetAuthor = asyncHandler(async (req, res) => {
   if(!req.body.fullName && !req.body.year_Born && !req.body.technology){
         res.status(400);
         throw new Error('Please add the required fields');
     }
     const author = await Author.create({
-        fullName : req.body.fullName ,
+        fullName : req.body.fullName,
         year_Born : req.body.year_Born,
         technology : req.body.technology
     });
@@ -29,7 +26,6 @@ const SetAuthor = asyncHandler(async (req, res) => {
 
 //@desc update Author
 // @route UPDATE /api/authors/:id
-//@ access private
 const updateAuthor = asyncHandler(async (req, res) => {
     const author = await Author.findById(req.params.id);
     if(!author){
@@ -46,15 +42,14 @@ const updateAuthor = asyncHandler(async (req, res) => {
 
 //@desc delete Author
 // @route DELETE /api/authors/:id
-//@ access private
 const deleteAuthor = asyncHandler(async (req, res) => {
     const author = await Author.findById(req.params.id);
     if(!author){
         throw new Error('Author not found');
     }
-    const removedauthor = await Author.deleteOne(author);
+    await author.remove();
 
-    res.json(removedauthor)
+    res.json( {id : req.params.id });
 })
 
 module.exports = {

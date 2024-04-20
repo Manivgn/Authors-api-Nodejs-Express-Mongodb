@@ -13,6 +13,10 @@ const authorSchema = mongoose.Schema({
     technology : {
         type : String ,
         required : true 
+    },
+    profile : {
+        type: String,
+        required : true
     }
 })
 
