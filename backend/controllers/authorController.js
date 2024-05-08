@@ -48,7 +48,7 @@ const deleteAuthor = asyncHandler(async (req, res) => {
     if(!author){
         throw new Error('Author not found');
     }
-    await author.remove();
+    await author.deleteOne();
 
     res.json( {id : req.params.id });
 })
