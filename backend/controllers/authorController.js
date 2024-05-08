@@ -11,14 +11,15 @@ const getAuthors = asyncHandler(async (req, res) => {
 //@desc Set Author
 // @route POST /api/authors
 const SetAuthor = asyncHandler(async (req, res) => {
-  if(!req.body.fullName && !req.body.year_Born && !req.body.technology){
+  if(!req.body.fullName && !req.body.year_Born && !req.body.technology && !req.body.profile){
         res.status(400);
         throw new Error('Please add the required fields');
     }
     const author = await Author.create({
         fullName : req.body.fullName,
         year_Born : req.body.year_Born,
-        technology : req.body.technology
+        technology : req.body.technology,
+        profile : req.body.profile
     });
 
     res.json(author)
